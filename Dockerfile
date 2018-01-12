@@ -43,10 +43,6 @@ RUN echo 'PS1="\u@\h:\w\\$ \[$(tput sgr0)\]"' >> /root/.bashrc \
     chmod 777 /usr/bin/pip && \
     chown $NB_UID:root /workspace 
 
-
-ADD src /workspace/src
-ADD static /workspace/static
-ADD templates /workspace/templates
 COPY main.py /workspace/
 COPY requirements.txt /workspace/
 COPY package.json /workspace/
@@ -76,6 +72,11 @@ RUN mkdir -p /workspace/node-lib && \
     package-cleanup --oldkernels --count=1 -y  && \
     rm -rf /var/cache/yum/*  && \
     yum -y clean all 
+
+# these may change a fair bit so add last
+ADD src /workspace/src
+ADD static /workspace/static
+ADD templates /workspace/templates
 
 EXPOSE 8000 5000
 WORKDIR /workspace
