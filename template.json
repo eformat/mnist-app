@@ -186,6 +186,13 @@
       "required": true
     },
     {
+      "name": "PREDICTION_SERVICE2",
+      "description": "Service name of prediction endpoint(Convolutional Neural Network).",
+      "value": "0.0.0.0",
+      "from": "[.0-9]",
+      "required": true
+    },
+    {
       "name": "PREDICTION_SERVICE3",
       "description": "Service name of prediction endpoint(logical regression).",
       "value": "0.0.0.0",
