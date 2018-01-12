@@ -180,7 +180,7 @@
     },
     {
       "name": "PREDICTION_SERVICE1",
-      "description": "Service name of prediction endpoint(liner regression).",
+      "description": "Service name of prediction endpoint(linear regression).",
       "value": "0.0.0.0",
       "from": "[.0-9]",
       "required": true
