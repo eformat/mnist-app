@@ -24,7 +24,7 @@
             "name": "latest",
             "from": {
               "kind": "DockerImage",
-              "name": "submod/mnist-app:latest"
+              "name": "library/mnist-app:latest"
             }
           }
         ]
