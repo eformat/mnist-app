@@ -7,8 +7,16 @@
 
 # dockerbuild
 
+```
 docker build -t submod/mnist-app -f Dockerfile_final .
+```
 
+# binary build
+
+```
+oc new-build --binary --name=mnist-app
+oc start-build mnist-app --from-dir=. --follow
+```
 
 # Integration With OpenShift
 

@@ -66,6 +66,32 @@ def model2(image):
     final = np.array(finalresult["outputs"]["scores"]["floatVal"])
     return final
 
+def model3(image):
+    host = os.environ.get('PREDICTION_HOST3', '0.0.0.0')
+    port = os.environ.get('PREDICTION_PORT3', '6006')
+    channel = implementations.insecure_channel(host, int(port))
+    stub = prediction_service_pb2.beta_create_PredictionService_stub(channel)
+    request = predict_pb2.PredictRequest()
+    request.model_spec.name = "mnist"
+    request.model_spec.signature_name = 'predict_images'
+    request.inputs['images'].CopyFrom(tf.contrib.util.make_tensor_proto(image, shape=[1, image.size]))
+
+    result = []
+    try:
+        result = stub.Predict(request, 10.0)
+    except AbortionError as e:
+        print("=======ERROR======")
+        print(type(e))    # the exception instance
+        print(e.args)     # arguments stored in .args
+        print(e)
+        return np.array([])
+
+    jsonresult = MessageToJson(result)
+    finalresult = json.loads(jsonresult)
+    final = np.array(finalresult["outputs"]["scores"]["floatVal"])
+    return final
+
+
 # webapp
 app = Flask(__name__)
 
@@ -77,20 +103,29 @@ def mnist():
     print request.json
     print "------------"
 
+    print os.environ.get('PREDICTION_HOST3', '0.0.0.0')
     print os.environ.get('PREDICTION_HOST2', '0.0.0.0')
     print os.environ.get('PREDICTION_HOST1', '0.0.0.0')
     image = np.array(input[0],dtype=np.dtype('float32'))
 
     resultlist1 = model1(image)
     resultlist2 = model2(image)
+    resultlist3 = model3(image)
+
     prediction1 = np.argmax(resultlist1)
     print prediction1
+
     prediction2 = np.argmax(resultlist2)
     print prediction2
+
+    prediction3 = np.argmax(resultlist3)
+    print prediction3
+
     output1 = resultlist1.flatten().tolist()
     output2 = softmax(resultlist2.flatten().tolist()).tolist()
-    return jsonify(results=[output1, output2])
+    output3 = resultlist3.flatten().tolist()
 
+    return jsonify(results=[output1, output2, output3])
 
 @app.route('/')
 def main():
