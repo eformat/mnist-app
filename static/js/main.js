@@ -110,6 +110,7 @@ var Main = function () {
                     data: JSON.stringify(inputs),
                     success: function success(data) {
                         console.log(JSON.stringify(inputs));
+                        console.log(JSON.stringify(data));
                         for (var _i = 0; _i < 3; _i++) {
                             var max = 0;
                             var max_index = 0;

@@ -89,7 +89,8 @@ class Main {
                 data: JSON.stringify(inputs),
                 success: (data) => {
                     console.log(JSON.stringify(inputs));
-                    for (let i = 0; i < 2; i++) {
+                    console.log(JSON.stringify(data));
+                    for (let i = 0; i < 3; i++) {
                         var max = 0;
                         var max_index = 0;
                         for (let j = 0; j < 10; j++) {
