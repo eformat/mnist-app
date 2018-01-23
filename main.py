@@ -1,4 +1,5 @@
 import os
+import sys
 import numpy as np
 from flask import Flask, jsonify, render_template, request
 import json
@@ -109,17 +110,44 @@ def mnist():
     image = np.array(input[0],dtype=np.dtype('float32'))
 
     resultlist1 = model1(image)
+
+    print "------------resultlist1"
+    print resultlist1
+    print "------------"
+
     resultlist2 = model2(image)
+
+    print "------------resultlist2"
+    print resultlist2
+    print "------------"
+
     resultlist3 = model3(image)
 
-    prediction1 = np.argmax(resultlist1)
-    print prediction1
+    print "------------resultlist3"
+    print resultlist3
+    print "------------"
 
-    prediction2 = np.argmax(resultlist2)
-    print prediction2
+    try:
+        prediction1 = np.argmax(resultlist1)
+        print prediction1
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
 
-    prediction3 = np.argmax(resultlist3)
-    print prediction3
+    try:
+#        prediction2 = np.argmax(resultlist2)
+        prediction2 = 0;
+        print prediction2
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
+
+    try:
+        prediction3 = np.argmax(resultlist3)
+        print prediction3
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
 
     output1 = resultlist1.flatten().tolist()
     output2 = softmax(resultlist2.flatten().tolist()).tolist()
